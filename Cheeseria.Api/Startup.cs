@@ -38,12 +38,23 @@ namespace Cheeseria.Api
 
             services.AddControllers();
 
-            services.AddDbContext<CheeseDbContext>(opt => opt.UseInMemoryDatabase("cheeseriadb"));
+            //for in-memory db testing
+            //services.AddDbContext<CheeseDbContext>(opt => opt.UseInMemoryDatabase("cheeseriadb"));
+
+            services.AddDbContext<CheeseSQLiteDBContext>(options => options.UseSqlite(Configuration.GetConnectionString("cs")));
 
             services.AddScoped<IActionHandlerAsync<CreateCheeseRequest, CreateCheeseResponse>, CheeseCreateHandler>();
             services.AddScoped<IActionHandlerAsync<GetCheeseRequest, IEnumerable<GetCheeseResponse>>, CheeseGetHandler>();
 
             services.AddScoped<ICheeseRepository, CheeseRepository>();
+            // Add service and create Policy with options
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+            });
 
             services.AddAutoMapper(typeof(Startup));
 
@@ -67,6 +78,8 @@ namespace Cheeseria.Api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Cheeseria.Api v1"));
             }
+
+            app.UseCors("CorsPolicy");
 
             app.UseHttpsRedirection();
 

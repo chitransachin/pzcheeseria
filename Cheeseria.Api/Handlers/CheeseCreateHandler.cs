@@ -29,6 +29,7 @@ namespace Cheeseria.Api.Handlers
 
 			var savedEntity = await _cheeseRepository.CreateCheese(cheeseEntity, cancellationToken);
 
+			//map the response back to a DTO for handling on the UI
 			return _mapper.Map<CreateCheeseResponse>(savedEntity);
 		}
 

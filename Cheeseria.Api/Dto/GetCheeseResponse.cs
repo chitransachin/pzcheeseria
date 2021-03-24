@@ -16,5 +16,8 @@ namespace Cheeseria.Api.Dto
 		public string Aroma { get; set; }
 		public bool IsPremium { get; set; }
 		public int QualityScore { get; set; }
+		public double PricePerKilo { get; set; }
+		public string CheeseImage { get; set; }
+		public string CheeseDescription { get; set; }
 	}
 }

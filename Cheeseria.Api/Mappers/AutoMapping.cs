@@ -12,9 +12,15 @@ namespace Cheeseria.Api.Mappers
 	{
 		public AutoMapping()
 		{
-			CreateMap<CreateCheeseRequest, CheeseEntity>();
-			CreateMap<CheeseEntity, CreateCheeseResponse>();
+			CreateMap<CreateCheeseRequest, CheeseEntity>()
+				.ForMember(r => r.CreatedAt, r => r.MapFrom(x => DateTime.UtcNow));
+
+			CreateMap<CheeseEntity, CreateCheeseResponse>()
+				.ForMember(cr => cr.CheeseId, e => e.MapFrom(x => x.Id))
+				.ForMember(cr => cr.WasCreated, e => e.MapFrom(x => x.Id > 0));
+			
 			CreateMap<CheeseEntity, GetCheeseResponse>();
+				
 		}
 	}
 }

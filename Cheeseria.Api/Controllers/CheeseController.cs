@@ -22,6 +22,17 @@ namespace Cheeseria.Api.Controllers
             _logger = logger;
         }
 
+
+        [HttpGet]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(GetCheeseResponse), 200)]
+        public async Task<IActionResult> GetCheese([FromServices] IActionHandlerAsync<GetCheeseRequest, IEnumerable<GetCheeseResponse>> actionHandler, CancellationToken cancellationToken)
+        {
+            var result = await actionHandler.ProcessAsync(new GetCheeseRequest {}, cancellationToken);
+            return Ok(result);
+        }
+
         [HttpGet("{cheeseId}")]
         [Consumes("application/json")]
         [Produces("application/json")]

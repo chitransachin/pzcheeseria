@@ -24,12 +24,11 @@ namespace Cheeseria.Api.Handlers
 
 		public async Task<IEnumerable<GetCheeseResponse>> ProcessAsync(GetCheeseRequest request, CancellationToken cancellationToken)
 		{
-			CheeseEntity reqEntity = null;
-
 			if (request.Id > 0)
 			{
-				reqEntity = await _cheeseRepository.GetCheese(request.Id, cancellationToken);
-				return _mapper.Map<IEnumerable<GetCheeseResponse>>(reqEntity);
+				CheeseEntity reqEntity = await _cheeseRepository.GetCheese(request.Id, cancellationToken);
+				var selectedCheese = _mapper.Map<GetCheeseResponse>(reqEntity);
+				return new List<GetCheeseResponse> { selectedCheese };
 			}
 			else
 			{

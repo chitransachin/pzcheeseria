@@ -11,8 +11,10 @@ namespace Cheeseria.Api.Database.Repositories
 {
 	public class CheeseRepository : ICheeseRepository
 	{
-		private readonly CheeseDbContext _dbContext;
-		public CheeseRepository(CheeseDbContext dbContext)
+		//private readonly CheeseDbContext _dbContext;
+		private readonly CheeseSQLiteDBContext _dbContext;
+
+		public CheeseRepository(CheeseSQLiteDBContext dbContext)
 		{
 			this._dbContext = dbContext;
 		}
