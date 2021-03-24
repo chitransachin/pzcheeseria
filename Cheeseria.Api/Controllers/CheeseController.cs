@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Cheeseria.Api.Dto;
 using Cheeseria.Api.Handlers;
 using Cheeseria.Api.Handlers.Abstractions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -27,6 +28,7 @@ namespace Cheeseria.Api.Controllers
         [Consumes("application/json")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(GetCheeseResponse), 200)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetCheese([FromServices] IActionHandlerAsync<GetCheeseRequest, IEnumerable<GetCheeseResponse>> actionHandler, CancellationToken cancellationToken)
         {
             var result = await actionHandler.ProcessAsync(new GetCheeseRequest {}, cancellationToken);
@@ -37,6 +39,7 @@ namespace Cheeseria.Api.Controllers
         [Consumes("application/json")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(GetCheeseResponse), 200)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetCheese(int cheeseId, [FromServices] IActionHandlerAsync<GetCheeseRequest, IEnumerable<GetCheeseResponse>> actionHandler, CancellationToken cancellationToken)
         {
             var result = await actionHandler.ProcessAsync(new GetCheeseRequest { Id = cheeseId }, cancellationToken);
@@ -46,7 +49,8 @@ namespace Cheeseria.Api.Controllers
         [HttpPost]
         [Consumes("application/json")]
         [Produces("application/json")]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(typeof(CreateCheeseResponse), 200)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> CreateCheese([FromBody] CreateCheeseRequest request, [FromServices] IActionHandlerAsync<CreateCheeseRequest, CreateCheeseResponse> actionHandler, CancellationToken cancellationToken)
 		{
             if (!ModelState.IsValid)
@@ -56,6 +60,17 @@ namespace Cheeseria.Api.Controllers
 
             var result = await actionHandler.ProcessAsync(request, cancellationToken);
 
+            return Ok(result);
+        }
+
+        [HttpDelete("{cheeseId}")]
+        [Consumes("application/json")]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(DeleteCheeseResponse), 200)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteCheese(int cheeseId, [FromServices] IActionHandlerAsync<DeleteCheeseRequest, DeleteCheeseResponse> actionHandler, CancellationToken cancellationToken)
+		{
+            var result = await actionHandler.ProcessAsync(new DeleteCheeseRequest { Id = cheeseId }, cancellationToken);
             return Ok(result);
         }
     }

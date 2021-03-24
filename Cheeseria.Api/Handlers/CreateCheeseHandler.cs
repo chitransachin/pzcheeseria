@@ -11,12 +11,12 @@ using Cheeseria.Api.Database.Models;
 
 namespace Cheeseria.Api.Handlers
 {
-	public class CheeseCreateHandler : IActionHandlerAsync<CreateCheeseRequest, CreateCheeseResponse>
+	public class CreateCheeseHandler : IActionHandlerAsync<CreateCheeseRequest, CreateCheeseResponse>
 	{
 		private readonly ICheeseRepository _cheeseRepository;
 		private readonly IMapper _mapper;
 
-		public CheeseCreateHandler(ICheeseRepository cheeseRepository, IMapper mapper)
+		public CreateCheeseHandler(ICheeseRepository cheeseRepository, IMapper mapper)
 		{
 			_cheeseRepository = cheeseRepository;
 			_mapper = mapper;
@@ -31,11 +31,6 @@ namespace Cheeseria.Api.Handlers
 
 			//map the response back to a DTO for handling on the UI
 			return _mapper.Map<CreateCheeseResponse>(savedEntity);
-		}
-
-		public Task<CreateCheeseResponse> ProcessWithValidationAsync(CreateCheeseRequest request, CancellationToken cancellationToken)
-		{
-			throw new NotImplementedException();
 		}
 	}
 }

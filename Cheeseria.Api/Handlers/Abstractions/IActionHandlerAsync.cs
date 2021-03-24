@@ -8,8 +8,6 @@ namespace Cheeseria.Api.Handlers.Abstractions
 {
 	public interface IActionHandlerAsync<TRequest, TResponse>
 	{
-		Task<TResponse> ProcessWithValidationAsync(TRequest request, CancellationToken cancellationToken);
-
 		Task<TResponse> ProcessAsync(TRequest request, CancellationToken cancellationToken);
 	}
 }

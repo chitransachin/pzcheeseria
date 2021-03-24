@@ -43,8 +43,9 @@ namespace Cheeseria.Api
 
             services.AddDbContext<CheeseSQLiteDBContext>(options => options.UseSqlite(Configuration.GetConnectionString("cs")));
 
-            services.AddScoped<IActionHandlerAsync<CreateCheeseRequest, CreateCheeseResponse>, CheeseCreateHandler>();
-            services.AddScoped<IActionHandlerAsync<GetCheeseRequest, IEnumerable<GetCheeseResponse>>, CheeseGetHandler>();
+            services.AddScoped<IActionHandlerAsync<CreateCheeseRequest, CreateCheeseResponse>, CreateCheeseHandler>();
+            services.AddScoped<IActionHandlerAsync<GetCheeseRequest, IEnumerable<GetCheeseResponse>>, GetCheeseHandler>();
+            services.AddScoped<IActionHandlerAsync<DeleteCheeseRequest, DeleteCheeseResponse>, DeleteCheeseHandler>();
 
             services.AddScoped<ICheeseRepository, CheeseRepository>();
             // Add service and create Policy with options

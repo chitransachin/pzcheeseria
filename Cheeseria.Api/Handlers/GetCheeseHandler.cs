@@ -11,12 +11,12 @@ using Cheeseria.Api.Database.Models;
 
 namespace Cheeseria.Api.Handlers
 {
-	public class CheeseGetHandler : IActionHandlerAsync<GetCheeseRequest, IEnumerable<GetCheeseResponse>>
+	public class GetCheeseHandler : IActionHandlerAsync<GetCheeseRequest, IEnumerable<GetCheeseResponse>>
 	{
 		private readonly ICheeseRepository _cheeseRepository;
 		private readonly IMapper _mapper;
 
-		public CheeseGetHandler(ICheeseRepository cheeseRepository, IMapper mapper)
+		public GetCheeseHandler(ICheeseRepository cheeseRepository, IMapper mapper)
 		{
 			_cheeseRepository = cheeseRepository;
 			_mapper = mapper;
@@ -35,11 +35,6 @@ namespace Cheeseria.Api.Handlers
 				var allCheeseEntity = await _cheeseRepository.GetCheeseCollection(cancellationToken);
 				return _mapper.Map<IEnumerable<GetCheeseResponse>>(allCheeseEntity);
 			}
-		}
-
-		Task<IEnumerable<GetCheeseResponse>> IActionHandlerAsync<GetCheeseRequest, IEnumerable<GetCheeseResponse>>.ProcessWithValidationAsync(GetCheeseRequest request, CancellationToken cancellationToken)
-		{
-			throw new NotImplementedException();
 		}
 	}
 }

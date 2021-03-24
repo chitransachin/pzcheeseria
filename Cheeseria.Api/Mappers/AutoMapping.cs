@@ -20,7 +20,6 @@ namespace Cheeseria.Api.Mappers
 				.ForMember(cr => cr.WasCreated, e => e.MapFrom(x => x.Id > 0));
 			
 			CreateMap<CheeseEntity, GetCheeseResponse>();
-				
 		}
 	}
 }
